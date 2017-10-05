@@ -135,7 +135,8 @@ class Generator(object):
                         print(generator.password(args.length))
                 except KeyboardInterrupt:
                     sys.exit()
-        print('Please enter parameters. For more info use [-h].')
+        else:
+            print('Please enter parameters. For more info use [-h].')
 
 
 if __name__ == "__main__":
