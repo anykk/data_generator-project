@@ -118,22 +118,24 @@ class Generator(object):
 
         args = parser.parse_args()
 
-        try:
-            for _ in range(args.num):
-                print(generator.random_person(args.sex, args.localization),
-                      generator.average_age(args.average_age),
-                      generator.random_address(args.localization),
-                      generator.random_job(args.localization),
-                      generator.phone_number())
-        except KeyboardInterrupt:
-            sys.exit()
-
-        except AttributeError:
+        if (vars(args)):
             try:
-                for _ in range(args.n):
-                    print(generator.password(args.length))
+                for _ in range(args.num):
+                    print(generator.random_person(args.sex, args.localization),
+                          generator.average_age(args.average_age),
+                          generator.random_address(args.localization),
+                          generator.random_job(args.localization),
+                          generator.phone_number())
             except KeyboardInterrupt:
                 sys.exit()
+
+            except AttributeError:
+                try:
+                    for _ in range(args.n):
+                        print(generator.password(args.length))
+                except KeyboardInterrupt:
+                    sys.exit()
+        print('Please enter parameters. For more info use [-h].')
 
 
 if __name__ == "__main__":
