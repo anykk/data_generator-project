@@ -95,6 +95,26 @@ class Generator(object):
         shuffle(pw_list)
         return "".join(pw_list)
 
+    @staticmethod
+    def parse_args():
+        parser = argparse.ArgumentParser()
+        subparsers = parser.add_subparsers(help='This script generates fictional data about person or password. '
+                                                'Available commands:')
+
+        person_parser = subparsers.add_parser('person', help='Generate person.')
+
+        person_parser.add_argument('localization', type=str, help='Available localizations are: ru/en.')
+        person_parser.add_argument('sex', type=str, help='Can be male or female. [m/f]')
+        person_parser.add_argument('num', type=int, help='Number of persons. [int]')
+        person_parser.add_argument('average_age', type=int, help='Average age. [int]')
+
+        password_parser = subparsers.add_parser('password', help='Generate person.')
+
+        password_parser.add_argument('length', type=int, help='Length of password. It may be 8 and > ...')
+        password_parser.add_argument('n', type=int, help='Number of passwords.')
+
+        return parser.parse_args()
+
     @classmethod
     def generate(cls):
         """Main method. Use it for generate data with console parameters. -h for more info."""
@@ -116,7 +136,7 @@ class Generator(object):
         password_parser.add_argument('length', type=int, help='Length of password. It may be 8 and > ...')
         password_parser.add_argument('n', type=int, help='Number of passwords.')
 
-        args = parser.parse_args()
+        args = Generator.parse_args()
 
         if (vars(args)):
             try:
