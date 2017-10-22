@@ -1,66 +1,41 @@
 import sys
 import argparse
+
 from random import choice as choice
 from random import randint as randint
 from random import randrange as randrange
 from random import shuffle as shuffle
 
-import data.address.ru as address_data_ru
-import data.address.en as address_data_en
-
-import data.job.ru as job_data_ru
-import data.job.en as job_data_en
-
-import data.person.ru as person_data_ru
-import data.person.en as person_data_en
+from data_generator.data import pds, available_locales
 
 
 class Generator(object):
     """A class, that generates fictional data"""
 
     def __init__(self):
-        """Initialize the class object and collect all the data together"""
-        self.pd_ru = person_data_ru
-        self.pd_en = person_data_en
-        self.ad_ru = address_data_ru
-        self.ad_en = address_data_en
-        self.jd_ru = job_data_ru
-        self.jd_en = job_data_en
+        """Initialize the class object and collect all the data together
+        pds - personal data
+        available_locales - locales, that are available now"""
+        self.pds = pds
+        self.available_locales = available_locales
 
     def random_person(self, parameter, loc):
         """Depending on parameter randomize different persons"""
-        if loc == 'ru':
-            if parameter == "m":
-                return f"{choice(self.pd_ru.last_names_male)} " \
-                       f"{choice(self.pd_ru.first_names_male)} " \
-                       f"{choice(self.pd_ru.middle_names_male)}"
-            if parameter == "f":
-                return f"{choice(self.pd_ru.last_names_female)} " \
-                       f"{choice(self.pd_ru.first_names_female)} " \
-                       f"{choice(self.pd_ru.middle_names_female)}"
-        if loc == 'en':
-            if parameter == "m":
-                return f"{choice(self.pd_en.first_names_male)} " \
-                       f"{choice(self.pd_en.last_names)}"
-            if parameter == "f":
-                return f"{choice(self.pd_en.first_names_female)} " \
-                       f"{choice(self.pd_en.last_names)}"
+        if parameter == "m":
+            return f"{choice(self.pds[loc].person.first_names_male)} " \
+                   f"{choice(self.pds[loc].person.last_names_male)}"
+        if parameter == "f":
+            return f"{choice(self.pds[loc].person.first_names_female)} " \
+                   f"{choice(self.pds[loc].person.last_names_female)}"
 
     def random_address(self, loc):
         """Randomize address from address_data"""
-        if loc == 'ru':
-            return f"{choice(self.ad_ru.city_names)} " \
-                   f"ул.{choice(self.ad_ru.street_titles)} {randint(1, 200)}"
-        if loc == 'en':
-            return f"{choice(self.ad_en.states)} " \
-                f"{choice(self.ad_en.street_suffixes)} Street {randint(1, 200)}"
+        return f"{choice(self.pds[loc].address.city_names)} " \
+               f"{choice(self.pds[loc].address.street_titles)} {randint(1, 200)}"
 
     def random_job(self, loc):
         """Randomize job from job_data"""
-        if loc == 'ru':
-            return f"{choice(self.jd_ru.jobs)}"
-        if loc == 'en':
-            return f"{choice(self.jd_en.jobs)}"
+        return f"{choice(self.pds[loc].jobs)}"
 
     @staticmethod
     def average_age(n):
