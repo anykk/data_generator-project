@@ -37,11 +37,11 @@ class TestGeneratorMethods(unittest.TestCase):
 
     def test_random_number(self):
         number = self.generator.phone_number()
-        self.assertEquals(len(str(number)), 11)
+        self.assertEqual(len(str(number)), 11)
 
     def test_password(self):
         password = self.generator.password(12)
-        self.assertEquals(len(password), 12)
+        self.assertEqual(len(password), 12)
 
 
 if __name__ == '__main__':
