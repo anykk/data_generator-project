@@ -3,8 +3,7 @@ from random import randint
 from random import randrange
 from random import shuffle
 
-from data import en
-from data import ru
+from data.utility import get_pds
 
 
 class Generator:
@@ -14,7 +13,7 @@ class Generator:
         """Initialize the class object and collect all the data together
         pds - personal data
         available_locales - locales, that are available now"""
-        self.pds = {'en': en, 'ru': ru}
+        self.pds = get_pds("data")
         self.available_locales = list(self.pds.keys())
 
     def random_person(self, parameter, loc):
