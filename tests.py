@@ -1,7 +1,8 @@
 import unittest
 import data.en as en
 import data.ru as ru
-from generator import Generator
+from main import *
+from data.utility import *
 
 
 class TestGeneratorMethods(unittest.TestCase):
@@ -42,6 +43,26 @@ class TestGeneratorMethods(unittest.TestCase):
     def test_password(self):
         password = self.generator.password(12)
         self.assertEqual(len(password), 12)
+
+
+class DataMethodsTest(unittest.TestCase):
+    def test_get_localizations(self):
+        self.assertEqual(list(get_localizations(get_dirs("data"))), ['en', 'ko', 'ru'])
+
+    def test_get_all_dirs(self):
+        self.assertEqual(list(get_dirs("data").keys()), ['en', 'jp', 'ko', 'ru'])
+
+
+class ErrorTests(unittest.TestCase):
+
+    def test_loc_files_error(self):
+        sys.argv = ['tests.py', 'person', 'ko', 'm', '1', '1']
+        with self.assertRaises(AttributeError):
+            main()
+
+        sys.argv = ['tests.py', 'person', 'jp', 'm', '1', '1']
+        with self.assertRaises(KeyError):
+            main()
 
 
 if __name__ == '__main__':

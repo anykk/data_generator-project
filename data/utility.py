@@ -29,5 +29,5 @@ def get_localizations(all_dirs):
 
 def get_pds(path='.'):
     localization_names = get_localizations(get_dirs(path))
-    module_names = map(lambda x: 'data' + '.' + x, localization_names)
-    return dict(zip(localization_names, map(__import__, module_names)))
+    module_names = map(lambda x: 'data' + '.' + x + '.__init__', localization_names)
+    return dict(zip(localization_names, map(lambda x: __import__(x, fromlist=['.']), module_names)))

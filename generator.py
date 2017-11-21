@@ -2,7 +2,6 @@ from random import choice
 from random import randint
 from random import randrange
 from random import shuffle
-
 from data.utility import get_pds
 
 
