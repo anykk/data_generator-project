@@ -10,7 +10,6 @@ Use python main.py person -h for more information or python main.py password -h 
 
 # Add new localization
 If u want to share this code and add new localization you need:
-1) add package with localization to data-package
+add package with localization to "data" package
 Structure of loc-package: !PLEASE KEEP THIS STRUCTURE!
 /loc/address (city_names, street_titles); job (jobs); person (first_names_fe/male, last_names_fe/male)
-2) add loc into dictionary of data (generator.py ---> pds)
