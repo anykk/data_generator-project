@@ -2,21 +2,24 @@ from random import choice
 from random import randint
 from random import randrange
 from random import shuffle
-from data.utility import get_pds
+from data.utility import get_pds, wrong_localizations, GenerateException
 
 
 class Generator:
     """A class, that generates fictional data"""
 
-    def __init__(self):
+    def __init__(self, data="data", folder="data"):
         """Initialize the class object and collect all the data together
         pds - personal data
         available_locales - locales, that are available now"""
-        self.pds = get_pds("data")
+        self.pds = get_pds(data, folder)
+        self.wrong_localizations = wrong_localizations
         self.available_locales = list(self.pds.keys())
 
     def random_person(self, parameter, loc):
         """Depending on parameter randomize different persons"""
+        self.check_attributes(["first_names_male", "last_names_male", "first_names_female", "last_names_female"],
+                              loc, 'person')
         if parameter == "m":
             return f"{choice(self.pds[loc].person.first_names_male)} " \
                    f"{choice(self.pds[loc].person.last_names_male)}"
@@ -25,12 +28,14 @@ class Generator:
                    f"{choice(self.pds[loc].person.last_names_female)}"
 
     def random_address(self, loc):
+        self.check_attributes(['city_names', 'street_titles'], loc, 'address')
         """Randomize address from address_data"""
         return f"{choice(self.pds[loc].address.city_names)} " \
                f"{choice(self.pds[loc].address.street_titles)} {randint(1, 200)}"
 
     def random_job(self, loc):
         """Randomize job from job_data"""
+        self.check_attributes(['jobs'], loc, 'job')
         return f"{choice(self.pds[loc].job.jobs)}"
 
     @staticmethod
@@ -65,3 +70,14 @@ class Generator:
 
         shuffle(pw_list)
         return "".join(pw_list)
+
+    def check_attributes(self, attributes, loc, file):
+        attributes = attributes
+        not_founded = []
+        for a in attributes:
+            if not hasattr(getattr(self.pds[loc], file), a):
+                not_founded.append(a)
+
+        if not_founded:
+            raise GenerateException(f"Not founded following attributes: {not_founded} in 'person.py' file "
+                                    f"for '{loc}' localization. Please check it!")

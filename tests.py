@@ -47,22 +47,22 @@ class TestGeneratorMethods(unittest.TestCase):
 
 class DataMethodsTest(unittest.TestCase):
     def test_get_localizations(self):
-        self.assertEqual(list(get_localizations(get_dirs("data"))), ['en', 'ko', 'ru'])
+        self.assertEqual(list(get_localizations(get_dirs("for_tests"))), ['ko'])
 
     def test_get_all_dirs(self):
-        self.assertEqual(list(get_dirs("data").keys()), ['en', 'jp', 'ko', 'ru'])
+        self.assertEqual(list(get_dirs("for_tests").keys()), ['jp', 'ko'])
 
 
 class ErrorTests(unittest.TestCase):
 
     def test_loc_files_error(self):
-        sys.argv = ['tests.py', 'person', 'ko', 'm', '1', '1']
-        with self.assertRaises(AttributeError):
-            main()
-
         sys.argv = ['tests.py', 'person', 'jp', 'm', '1', '1']
-        with self.assertRaises(KeyError):
-            main()
+        with self.assertRaises(WrongLocalizationError):
+            main("for_tests")
+
+        sys.argv = ['tests.py', 'person', 'ko', 'm', '1', '1']
+        with self.assertRaises(GenerateException):
+            main("for_tests")
 
 
 if __name__ == '__main__':

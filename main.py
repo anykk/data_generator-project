@@ -1,11 +1,12 @@
 import sys
 import argparse
 from generator import Generator
+from data.utility import LocalizationNotFoundError, WrongLocalizationError
 
 
-def main():
+def main(data="data"):
     """Main method. Use it for generate data with console parameters. -h for more info."""
-    generator = Generator()
+    generator = Generator(data, data)
     args = parse_args(generator)
 
     if 'length' in args:
@@ -15,21 +16,18 @@ def main():
         except KeyboardInterrupt:
             sys.exit()
     else:
-        try:
-            for _ in range(args.num):
-                print(generator.random_person(args.sex, args.localization),
-                      generator.average_age(args.average_age),
-                      generator.random_address(args.localization),
-                      generator.random_job(args.localization),
-                      generator.phone_number())
-
-        except KeyError as exception:
-            raise KeyError(f"Unidentified localization {exception}, please check 'data' module with localization.")
-
-        except AttributeError as exception:
-            raise AttributeError(f"It seems like you have trouble with files for '{args.localization}' "
-                                 f"localization. {str(exception).capitalize()}. "
-                                 f"Please, check it!")
+        if args.localization not in generator.wrong_localizations:
+            raise LocalizationNotFoundError(f"Undefined localization: '{args.localization}'. Please check data folder.")
+        if generator.wrong_localizations[args.localization]:
+            raise WrongLocalizationError(f"Something wrong with following files: "
+                                         f"{generator.wrong_localizations[args.localization]} "
+                                         f"in '{args.localization}' localization. Please check it in data folder.")
+        for _ in range(args.num):
+            print(generator.random_person(args.sex, args.localization),
+                  generator.average_age(args.average_age),
+                  generator.random_address(args.localization),
+                  generator.random_job(args.localization),
+                  generator.phone_number())
 
 
 def parse_args(generator):
@@ -45,7 +43,7 @@ def parse_args(generator):
     person_parser.add_argument('num', type=int, help='Number of persons. [int]')
     person_parser.add_argument('average_age', type=int, help='Average age. [int]')
 
-    password_parser = subparsers.add_parser('password', help='Generate person.')
+    password_parser = subparsers.add_parser('password', help='Generate password.')
 
     password_parser.add_argument('length', type=int, help='Length of password. It may be 8 and > ...')
     password_parser.add_argument('n', type=int, help='Number of passwords.')
