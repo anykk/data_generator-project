@@ -25,12 +25,12 @@ def parse(filename):
 def get_pds(folder="data"):
     """Get personal all data dicts (wrong too)"""
     jsons = get_jsons(folder)
-    localizations_names = map(lambda x: x.replace(".json", ""), jsons)
+    localizations_names = map(lambda x: x[0: -5], jsons)
     localizations_data = map(lambda x: parse(folder + sep + x), jsons)
-    return dict(zip(localizations_names, localizations_data))
+    return folder, dict(zip(localizations_names, localizations_data))
 
 
-class LocalizationNotFoundError(BaseException):
+class LocalizationNotFoundError(Exception):
     """Throws when localization was not found in data folder."""
     def __init__(self, name, folder):
         super().__init__()
@@ -42,7 +42,7 @@ class LocalizationNotFoundError(BaseException):
                f"'{self.name}' localization in '{abspath(self.folder)}' folder!"
 
 
-class NotFullLocalizationError(BaseException):
+class NotFullLocalizationError(Exception):
     """Throws when localization was found in data folder, but some dict keys was not found."""
     def __init__(self, name, folder, keys):
         super().__init__()
@@ -55,10 +55,14 @@ class NotFullLocalizationError(BaseException):
                f"localization missed following keys: {self.keys}"
 
 
-class NothingGeneratedError(BaseException):
+class NothingGeneratedError(Exception):
     """Throws when all dict keys are present but some is empty."""
-    def __init__(self):
+    def __init__(self, name, folder, key):
         super().__init__()
+        self.name = name
+        self.folder = folder
+        self.key = key
 
     def __str__(self):
-        return "NothingGeneratedError: "
+        return f"NothingGeneratedError: In {abspath(self.name) + '.json'} localization file for '{self.name}' " \
+               f"localization {self.key} is empty or 'broken'."

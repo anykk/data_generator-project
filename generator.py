@@ -1,18 +1,14 @@
-from random import choice
-from random import randint
-from random import randrange
-from random import shuffle
-from utility import get_pds, NotFullLocalizationError, NothingGeneratedError
+from random import choice, randint, randrange, shuffle
+from utility import NotFullLocalizationError, NothingGeneratedError
 
 
 class Generator:
     """A class, that generates fictional data"""
-    def __init__(self, data_folder="data"):
-        """Initialize the class object and collect all the data together
+    def __init__(self, data):
+        """Initialize the class object and collect all data together
         pds - personal data
         available_locales - locales, that are available now"""
-        self._data_folder = data_folder
-        self._pds = get_pds(self._data_folder)
+        self._data_folder, self._pds = data
         self._available_locales = list(self._pds.keys())
 
     @property
@@ -30,29 +26,32 @@ class Generator:
     def random_person(self, parameter, loc):
         """Depending on parameter randomize different persons"""
         self._check_keys(loc, self._data_folder)
-        data = f"{choice(self._pds[loc]['person'][parameter]['first_name'])} " \
-               f"{choice(self._pds[loc]['person'][parameter]['last_name'])}"
-        if not data:
-            raise NothingGeneratedError()
-        return data
+        try:
+            return f"{choice(self._pds[loc]['person'][parameter]['first_name'])} " \
+                   f"{choice(self._pds[loc]['person'][parameter]['last_name'])}"
+        except IndexError:
+            raise NothingGeneratedError(loc, self._data_folder,
+                                        '{"0": {"person": {"1": {"first_name/last_name": }}}}'
+                                        .replace("0", loc).replace("1", parameter))
 
     def random_address(self, loc):
         """Randomize address from address_data"""
         self._check_keys(loc, self._data_folder)
-        data = f"{choice(self._pds[loc]['address']['city'])} " \
-               f"{choice(self._pds[loc]['address']['street'])} {randint(1, 200)}"
-        if not data:
-            raise NothingGeneratedError()
-        return data
+        try:
+            return f"{choice(self._pds[loc]['address']['city'])} " \
+                   f"{choice(self._pds[loc]['address']['street'])} {randint(1, 200)}"
+        except IndexError:
+            raise NothingGeneratedError(loc, self._data_folder,
+                                        '{"0": {"address": {"city/street": }}}'.replace("0", loc))
 
     def random_job(self, loc):
         """Randomize job from job_data"""
         self._check_keys(loc, self._data_folder)
-        self._check_keys(loc, f"{loc}.json")
-        data = f"{choice(self._pds[loc]['job'])}"
-        if not data:
-            raise NothingGeneratedError()
-        return data
+        try:
+            return f"{choice(self._pds[loc]['job'])}"
+        except IndexError:
+            raise NothingGeneratedError(loc, self._data_folder,
+                                        '{"0": {"job": }}'.replace("0", loc))
 
     @staticmethod
     def average_age(n):

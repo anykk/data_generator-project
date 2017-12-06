@@ -1,13 +1,13 @@
 import argparse
 import sys
-
 from generator import Generator
-from utility import LocalizationNotFoundError
+from utility import get_pds, NothingGeneratedError, LocalizationNotFoundError, NotFullLocalizationError
 
 
 def main():
     """Main method. Use it for generate data with console parameters. -h for more info."""
-    generator = Generator()
+    pds = get_pds()
+    generator = Generator(pds)
     args = parse_args(generator)
 
     if 'length' in args:
@@ -17,14 +17,21 @@ def main():
         except KeyboardInterrupt:
             sys.exit()
     else:
-        if args.localization not in generator.pds:
-            raise LocalizationNotFoundError(args.localization, generator.data_folder)
-        for _ in range(args.count):
-            print(generator.random_person(args.gender, args.localization),
-                  generator.average_age(args.age),
-                  generator.random_address(args.localization),
-                  generator.random_job(args.localization),
-                  generator.phone_number())
+        try:
+            if args.localization not in generator.pds:
+                raise LocalizationNotFoundError(args.localization, generator.data_folder)
+            for _ in range(args.count):
+                print(generator.random_person(args.gender, args.localization),
+                      generator.average_age(args.age),
+                      generator.random_address(args.localization),
+                      generator.random_job(args.localization),
+                      generator.phone_number())
+        except LocalizationNotFoundError as e:
+            sys.exit(str(e))
+        except NotFullLocalizationError as e:
+            sys.exit(str(e))
+        except NothingGeneratedError as e:
+            sys.exit(str(e))
 
 
 def parse_args(generator):
