@@ -1,8 +1,6 @@
 import unittest
-import data.en as en
-import data.ru as ru
 from main import *
-from data.utility import *
+from utility import *
 
 
 class TestGeneratorMethods(unittest.TestCase):
@@ -47,7 +45,7 @@ class TestGeneratorMethods(unittest.TestCase):
 
 class DataMethodsTest(unittest.TestCase):
     def test_get_localizations(self):
-        self.assertEqual(list(get_localizations(get_dirs("for_tests"))), ['ko'])
+        self.assertEqual(list(get_jsons(get_dirs("for_tests"))), ['ko'])
 
     def test_get_all_dirs(self):
         self.assertEqual(list(get_dirs("for_tests").keys()), ['jp', 'ko'])

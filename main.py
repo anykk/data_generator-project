@@ -1,12 +1,13 @@
-import sys
 import argparse
+import sys
+
 from generator import Generator
-from data.utility import LocalizationNotFoundError, WrongLocalizationError
+from utility import LocalizationNotFoundError
 
 
-def main(data="data"):
+def main():
     """Main method. Use it for generate data with console parameters. -h for more info."""
-    generator = Generator(data, data)
+    generator = Generator()
     args = parse_args(generator)
 
     if 'length' in args:
@@ -16,15 +17,11 @@ def main(data="data"):
         except KeyboardInterrupt:
             sys.exit()
     else:
-        if args.localization not in generator.wrong_localizations:
+        if args.localization not in generator.pds:
             raise LocalizationNotFoundError(f"Undefined localization: '{args.localization}'. Please check data folder.")
-        if generator.wrong_localizations[args.localization]:
-            raise WrongLocalizationError(f"Something wrong with following files: "
-                                         f"{generator.wrong_localizations[args.localization]} "
-                                         f"in '{args.localization}' localization. Please check it in data folder.")
-        for _ in range(args.num):
-            print(generator.random_person(args.sex, args.localization),
-                  generator.average_age(args.average_age),
+        for _ in range(args.count):
+            print(generator.random_person(args.gender, args.localization),
+                  generator.average_age(args.age),
                   generator.random_address(args.localization),
                   generator.random_job(args.localization),
                   generator.phone_number())
@@ -39,9 +36,9 @@ def parse_args(generator):
 
     person_parser.add_argument('localization', type=str, help=f'Localization, you can choose from:'
                                                               f'{generator.available_locales}')
-    person_parser.add_argument('sex', type=str, help='Can be male or female. [m/f]')
-    person_parser.add_argument('num', type=int, help='Number of persons. [int]')
-    person_parser.add_argument('average_age', type=int, help='Average age. [int]')
+    person_parser.add_argument('gender', type=str, help='Can be male or female. [m/f]')
+    person_parser.add_argument('count', type=int, help='Count of persons. [int]')
+    person_parser.add_argument('age', type=int, help='Average age. [int]')
 
     password_parser = subparsers.add_parser('password', help='Generate password.')
 

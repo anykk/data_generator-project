@@ -1,63 +1,55 @@
-from os import listdir
-from os import sep
-from os.path import isdir
-from os.path import isfile
-wrong_localizations = {}
+from os import listdir, sep
+from os.path import abspath
+import json
 
 
-def get_dirs(path='.'):
-    all_dirs = dict()
-    for data in listdir(path):
-        if isdir(path + sep + data) and '_' not in data and len(data) == 2:
-            all_dirs[data] = []
-            for file in listdir(path + sep + data):
-                if isfile(path + sep + data + sep + file) and '_' not in file:
-                    all_dirs[data].append(file)
-    return all_dirs
+def get_jsons(folder="data"):
+    """Identify all json files from any path."""
+    jsons = []
+    for data in listdir(folder):
+        if data.endswith(".json"):
+            jsons.append(data)
+    return jsons
 
 
-def get_localizations(all_dirs):
-    localizations = all_dirs
-    wrong_keys = set()
-    for key in localizations:
-        wrong_localizations[key] = []
-        for file in ['address.py', 'job.py', 'person.py']:
-            if file not in localizations[key]:
-                wrong_localizations[key].append(file)
-                wrong_keys.add(key)
-    for key in wrong_keys:
-        del localizations[key]
-    return localizations.keys()
+def parse(filename):
+    """Parse json dicts from file. If can't parse => empty dict."""
+    try:
+        with open(filename, "r", encoding="utf-8") as file:
+            data = json.load(file)
+        return data
+    except json.decoder.JSONDecodeError:
+        return dict()
 
 
-def get_pds(path='.', folder="data"):
-    localization_names = get_localizations(get_dirs(path))
-    module_names = map(lambda x: folder + '.' + x + '.__init__', localization_names)
-    return dict(zip(localization_names, map(lambda x: __import__(x, fromlist=['.']), module_names)))
+def get_pds(folder="data"):
+    """Get personal all data dicts (wrong too)"""
+    jsons = get_jsons(folder)
+    localizations_names = map(lambda x: x.replace(".json", ""), jsons)
+    localizations_data = map(lambda x: parse(folder + sep + x), jsons)
+    return dict(zip(localizations_names, localizations_data))
 
 
 class LocalizationNotFoundError(BaseException):
-    def __init__(self, message):
+    """Throws when localization was not found in data folder."""
+    def __init__(self, name, folder):
         super().__init__()
-        self.message = message
+        self.name = name
+        self.folder = folder
 
     def __str__(self):
-        return f"LocalizationNotFoundError: {self.message}"
+        return f"LocalizationNotFoundError: Not found '{self.name}.json' localization file for " \
+               f"'{self.name}' localization in '{abspath(self.folder)}' folder!"
 
 
-class WrongLocalizationError(BaseException):
-    def __init__(self, message):
+class GenerateError(BaseException):
+    """Throws when localization was found in data folder, but some dict keys was not found."""
+    def __init__(self, name, folder, keys):
         super().__init__()
-        self.message = message
+        self.name = name
+        self.folder = folder
+        self.keys = keys
 
     def __str__(self):
-        return f"WrongLocalizationError: {self.message}"
-
-
-class GenerateException(BaseException):
-    def __init__(self, message):
-        super().__init__()
-        self.message = message
-
-    def __str__(self):
-        return f"GenerateException: {self.message}"
+        return f"GenerateError: In '{self.name}.json' localization file for '{self.name}' " \
+               f"localization missed following keys: {self.keys}"

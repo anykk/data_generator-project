@@ -2,41 +2,43 @@ from random import choice
 from random import randint
 from random import randrange
 from random import shuffle
-from data.utility import get_pds, wrong_localizations, GenerateException
+
+from utility import get_pds, GenerateError
 
 
 class Generator:
     """A class, that generates fictional data"""
-
-    def __init__(self, data="data", folder="data"):
+    def __init__(self, data_folder="data"):
         """Initialize the class object and collect all the data together
         pds - personal data
         available_locales - locales, that are available now"""
-        self.pds = get_pds(data, folder)
-        self.wrong_localizations = wrong_localizations
-        self.available_locales = list(self.pds.keys())
+        self._pds = get_pds(data_folder)
+        self._available_locales = list(self._pds.keys())
+
+    @property
+    def pds(self):
+        return self._pds
+
+    @property
+    def available_locales(self):
+        return self._available_locales
 
     def random_person(self, parameter, loc):
         """Depending on parameter randomize different persons"""
-        self.check_attributes(["first_names_male", "last_names_male", "first_names_female", "last_names_female"],
-                              loc, 'person')
-        if parameter == "m":
-            return f"{choice(self.pds[loc].person.first_names_male)} " \
-                   f"{choice(self.pds[loc].person.last_names_male)}"
-        if parameter == "f":
-            return f"{choice(self.pds[loc].person.first_names_female)} " \
-                   f"{choice(self.pds[loc].person.last_names_female)}"
+        self._check_keys(loc, f"{loc}.json")
+        return f"{choice(self._pds[loc]['person'][parameter]['first_name'])} " \
+               f"{choice(self._pds[loc]['person'][parameter]['last_name'])}"
 
     def random_address(self, loc):
-        self.check_attributes(['city_names', 'street_titles'], loc, 'address')
+        # self.check_attributes(['city_names', 'street_titles'], loc, 'address')
         """Randomize address from address_data"""
-        return f"{choice(self.pds[loc].address.city_names)} " \
-               f"{choice(self.pds[loc].address.street_titles)} {randint(1, 200)}"
+        return f"{choice(self._pds[loc]['address']['city'])} " \
+               f"{choice(self._pds[loc]['address']['street'])} {randint(1, 200)}"
 
     def random_job(self, loc):
         """Randomize job from job_data"""
-        self.check_attributes(['jobs'], loc, 'job')
-        return f"{choice(self.pds[loc].job.jobs)}"
+        self._check_keys(loc, f"{loc}.json")
+        return f"{choice(self._pds[loc]['job'])}"
 
     @staticmethod
     def average_age(n):
@@ -71,13 +73,34 @@ class Generator:
         shuffle(pw_list)
         return "".join(pw_list)
 
-    def check_attributes(self, attributes, loc, file):
-        attributes = attributes
-        not_founded = []
-        for a in attributes:
-            if not hasattr(getattr(self.pds[loc], file), a):
-                not_founded.append(a)
-
+    def _check_keys(self, loc, file):
+        not_founded = {}
+        if "address" not in self._pds[loc]:
+            not_founded.update({"address": {"city": "(...)", "street": "(...)"}})
+        else:
+            if "city" not in self._pds[loc]["address"]:
+                not_founded.update({"address": {"city": "(...)"}})
+            if "street" not in self._pds[loc]["address"]:
+                not_founded.update({"address": {"street": "(...)"}})
+        if "job" not in self._pds[loc]:
+            not_founded.update({"job": "(...)"})
+        if "person" not in self._pds[loc]:
+            not_founded.update({"person": {"m": {"first_name": "(...)", "last_name": "(...)"},
+                                           "f": {"first_name": "(...)", "last_name": "(...)"}}})
+        else:
+            if "m" not in self._pds[loc]["person"]:
+                not_founded.update({"person": {"m": {"first_name": "(...)", "last_name": "(...)"}}})
+            else:
+                if "first_name" not in self._pds[loc]["person"]["m"]:
+                    not_founded.update({"person": {"m": {"first_name": "(...)"}}})
+                if "last_name" not in self._pds[loc]["person"]["m"]:
+                    not_founded.update({"person": {"m": {"last_name": "(...)"}}})
+            if "f" not in self._pds[loc]["person"]:
+                not_founded.update({"person": {"first_name": "(...)", "last_name": "(...)"}})
+            else:
+                if "first_name" not in self._pds[loc]["person"]["f"]:
+                    not_founded.update({"person": {"f": {"first_name": "(...)"}}})
+                if "last_name" not in self._pds[loc]["person"]["f"]:
+                    not_founded.update({"person": {"f": {"last_name": "(...)"}}})
         if not_founded:
-            raise GenerateException(f"Not founded following attributes: {not_founded} in 'person.py' file "
-                                    f"for '{loc}' localization. Please check it!")
+            raise GenerateError(loc, file, not_founded)

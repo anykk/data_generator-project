@@ -4,7 +4,7 @@ Use method generate from class Generator, if you want import it into your module
 or run 'python main.py' in terminal, if u want to use it like script.
 
 # Usage
-Example: ~ python main.py person ru m 17658 57
+Example: ~ python main.py person ru male 17658 57
 This command generates data about 17658 russian men 57 years old
 Use python main.py person -h for more information or python main.py password -h (generate passwords)
 
