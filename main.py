@@ -18,7 +18,7 @@ def main():
             sys.exit()
     else:
         if args.localization not in generator.pds:
-            raise LocalizationNotFoundError(f"Undefined localization: '{args.localization}'. Please check data folder.")
+            raise LocalizationNotFoundError(args.localization, generator.data_folder)
         for _ in range(args.count):
             print(generator.random_person(args.gender, args.localization),
                   generator.average_age(args.age),

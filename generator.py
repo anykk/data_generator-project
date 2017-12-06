@@ -2,8 +2,7 @@ from random import choice
 from random import randint
 from random import randrange
 from random import shuffle
-
-from utility import get_pds, GenerateError
+from utility import get_pds, NotFullLocalizationError, NothingGeneratedError
 
 
 class Generator:
@@ -12,7 +11,8 @@ class Generator:
         """Initialize the class object and collect all the data together
         pds - personal data
         available_locales - locales, that are available now"""
-        self._pds = get_pds(data_folder)
+        self._data_folder = data_folder
+        self._pds = get_pds(self._data_folder)
         self._available_locales = list(self._pds.keys())
 
     @property
@@ -23,22 +23,36 @@ class Generator:
     def available_locales(self):
         return self._available_locales
 
+    @property
+    def data_folder(self):
+        return self._data_folder
+
     def random_person(self, parameter, loc):
         """Depending on parameter randomize different persons"""
-        self._check_keys(loc, f"{loc}.json")
-        return f"{choice(self._pds[loc]['person'][parameter]['first_name'])} " \
+        self._check_keys(loc, self._data_folder)
+        data = f"{choice(self._pds[loc]['person'][parameter]['first_name'])} " \
                f"{choice(self._pds[loc]['person'][parameter]['last_name'])}"
+        if not data:
+            raise NothingGeneratedError()
+        return data
 
     def random_address(self, loc):
-        # self.check_attributes(['city_names', 'street_titles'], loc, 'address')
         """Randomize address from address_data"""
-        return f"{choice(self._pds[loc]['address']['city'])} " \
+        self._check_keys(loc, self._data_folder)
+        data = f"{choice(self._pds[loc]['address']['city'])} " \
                f"{choice(self._pds[loc]['address']['street'])} {randint(1, 200)}"
+        if not data:
+            raise NothingGeneratedError()
+        return data
 
     def random_job(self, loc):
         """Randomize job from job_data"""
+        self._check_keys(loc, self._data_folder)
         self._check_keys(loc, f"{loc}.json")
-        return f"{choice(self._pds[loc]['job'])}"
+        data = f"{choice(self._pds[loc]['job'])}"
+        if not data:
+            raise NothingGeneratedError()
+        return data
 
     @staticmethod
     def average_age(n):
@@ -74,6 +88,7 @@ class Generator:
         return "".join(pw_list)
 
     def _check_keys(self, loc, file):
+        """Check that keys are exist in pds dictionary and claim all not existing."""
         not_founded = {}
         if "address" not in self._pds[loc]:
             not_founded.update({"address": {"city": "(...)", "street": "(...)"}})
@@ -103,4 +118,4 @@ class Generator:
                 if "last_name" not in self._pds[loc]["person"]["f"]:
                     not_founded.update({"person": {"f": {"last_name": "(...)"}}})
         if not_founded:
-            raise GenerateError(loc, file, not_founded)
+            raise NotFullLocalizationError(loc, file, not_founded)

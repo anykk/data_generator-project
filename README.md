@@ -10,6 +10,17 @@ Use python main.py person -h for more information or python main.py password -h 
 
 # Add new localization
 If u want to share this code and add new localization you need:
-add package with localization to "data" package
+add json with localization to "data" folder
 Structure of loc-package: !PLEASE KEEP THIS STRUCTURE!
-/loc/address (city_names, street_titles); job (jobs); person (first_names_fe/male, last_names_fe/male)
+{'address':
+    {'city': '(...)',
+    'street': '(...)'},
+'job': '(...)',
+'person':
+    {'m':
+        {'first_name': '(...)',
+        'last_name': '(...)'},
+    'f':
+    {'first_name': '(...)',
+    'last_name': '(...)'}}}
+

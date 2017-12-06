@@ -42,7 +42,7 @@ class LocalizationNotFoundError(BaseException):
                f"'{self.name}' localization in '{abspath(self.folder)}' folder!"
 
 
-class GenerateError(BaseException):
+class NotFullLocalizationError(BaseException):
     """Throws when localization was found in data folder, but some dict keys was not found."""
     def __init__(self, name, folder, keys):
         super().__init__()
@@ -51,5 +51,14 @@ class GenerateError(BaseException):
         self.keys = keys
 
     def __str__(self):
-        return f"GenerateError: In '{self.name}.json' localization file for '{self.name}' " \
+        return f"GenerateError: In '{abspath(self.name + '.json')}' localization file for '{self.name}' " \
                f"localization missed following keys: {self.keys}"
+
+
+class NothingGeneratedError(BaseException):
+    """Throws when all dict keys are present but some is empty."""
+    def __init__(self):
+        super().__init__()
+
+    def __str__(self):
+        return "NothingGeneratedError: "
