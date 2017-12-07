@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0556531c-e8cc-4dd9-be33-a239ad1f9a82" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generator.py" afterPath="$PROJECT_DIR$/generator.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests.py" afterPath="$PROJECT_DIR$/tests.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utility.py" afterPath="$PROJECT_DIR$/utility.py" />
     </list>
@@ -20,8 +18,8 @@
       <file leaf-file-name="generator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/generator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="952">
-              <caret line="56" column="23" lean-forward="true" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
+            <state relative-caret-position="838">
+              <caret line="119" column="52" lean-forward="false" selection-start-line="119" selection-start-column="48" selection-end-line="119" selection-end-column="52" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
               </folding>
@@ -68,8 +66,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="33" lean-forward="false" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+            <state relative-caret-position="153">
+              <caret line="21" column="47" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="47" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -80,30 +78,31 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
+            <state relative-caret-position="272">
               <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tests.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tests.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+            <state relative-caret-position="141">
+              <caret line="59" column="22" lean-forward="false" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
+                <marker date="1512636579821" expanded="true" signature="2130:2189" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utility.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="utility.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utility.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-46">
-              <caret line="27" column="47" lean-forward="false" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
+            <state relative-caret-position="1156">
+              <caret line="68" column="0" lean-forward="true" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
@@ -171,8 +170,8 @@
         <option value="$PROJECT_DIR$/data/en.json" />
         <option value="$PROJECT_DIR$/data/ru.json" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/generator.py" />
+        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/utility.py" />
         <option value="$PROJECT_DIR$/tests.py" />
       </list>
@@ -376,34 +375,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="tests_py - 2017.12.04 at 01h 40m 34s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 09m 21s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="tests_py - 2017.12.04 at 01h 56m 54s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 11m 20s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="tests_py - 2017.12.04 at 01h 57m 41s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 12m 14s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="tests_py - 2017.12.04 at 01h 58m 34s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 15m 48s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="tests_py - 2017.12.07 at 00h 00m 09s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 16m 04s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="tests_py - 2017.12.07 at 00h 00m 47s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 17m 03s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="tests_py - 2017.12.07 at 00h 02m 07s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 17m 29s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="tests_py - 2017.12.07 at 00h 05m 02s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 18m 19s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="tests_py - 2017.12.07 at 00h 06m 30s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 24m 41s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="tests_py - 2017.12.07 at 00h 07m 25s.xml">
+    <history-entry file="tests_py - 2017.12.07 at 13h 27m 17s.xml">
       <configuration name="tests.py" configurationId="tests" />
     </history-entry>
   </component>
@@ -672,14 +671,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/ru.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -712,30 +703,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="33" lean-forward="false" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="272">
+          <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/generator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
-          <caret line="56" column="23" lean-forward="true" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
+        <state relative-caret-position="838">
+          <caret line="119" column="52" lean-forward="false" selection-start-line="119" selection-start-column="48" selection-end-line="119" selection-end-column="52" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+        <state relative-caret-position="153">
+          <caret line="21" column="47" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="47" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -744,10 +733,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utility.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-46">
-          <caret line="27" column="47" lean-forward="false" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
+        <state relative-caret-position="1156">
+          <caret line="68" column="0" lean-forward="true" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="59" column="22" lean-forward="false" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1512636579821" expanded="true" signature="2130:2189" ph="..." />
           </folding>
         </state>
       </provider>

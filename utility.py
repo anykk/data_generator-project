@@ -57,12 +57,12 @@ class NotFullLocalizationError(Exception):
 
 class NothingGeneratedError(Exception):
     """Throws when all dict keys are present but some is empty."""
-    def __init__(self, name, folder, key):
+    def __init__(self, name, folder, keys):
         super().__init__()
         self.name = name
         self.folder = folder
-        self.key = key
+        self.keys = keys
 
     def __str__(self):
         return f"NothingGeneratedError: In {abspath(self.name) + '.json'} localization file for '{self.name}' " \
-               f"localization {self.key} is empty or 'broken'."
+               f"localization {self.keys} is empty or 'broken'."

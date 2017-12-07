@@ -1,6 +1,5 @@
 import unittest
 from main import *
-from utility import *
 
 
 class TestGeneratorMethods(unittest.TestCase):
@@ -50,14 +49,6 @@ class TestGeneratorMethods(unittest.TestCase):
         self.assertEqual(len(password), 12)
 
 
-class DataMethodsTest(unittest.TestCase):
-    def setUp(self):
-        pass
-
-    def test_get_pds(self):
-        pass
-
-
 class ErrorTests(unittest.TestCase):
     def setUp(self):
         self.test_data = {"test_data": {
@@ -79,13 +70,24 @@ class ErrorTests(unittest.TestCase):
         }
 
     def test_not_found_error(self):
-        pass
+        del self.test_data["test_data"]
+        self.generator = Generator(("tests", self.test_data))
+        with self.assertRaises(LocalizationNotFoundError):
+            if "test_data" not in self.generator.pds:
+                raise LocalizationNotFoundError("test_data", "test")
+            self.generator.random_person("m", "test_data")
 
     def test_generate_error(self):
-        pass
+        self.test_data["test_data"]["job"] = ()
+        self.generator = Generator(("tests", self.test_data))
+        with self.assertRaises(NothingGeneratedError):
+            self.generator.random_job("test_data")
 
     def test_not_full_error(self):
-        pass
+        del self.test_data["test_data"]["address"]
+        self.generator = Generator(("tests", self.test_data))
+        with self.assertRaises(NotFullLocalizationError):
+            self.generator.random_address("test_data")
 
 
 if __name__ == '__main__':
