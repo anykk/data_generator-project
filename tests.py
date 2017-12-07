@@ -1,4 +1,7 @@
+import io
 import unittest
+from unittest import mock
+import utility
 from main import *
 
 
@@ -47,6 +50,51 @@ class TestGeneratorMethods(unittest.TestCase):
     def test_password(self):
         password = self.generator.password(12)
         self.assertEqual(len(password), 12)
+
+
+class DataMethodsTest(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def test_get_jsons(self):
+        with mock.patch('utility.listdir', return_value=['ko.json', 'en.json.json', 'ru', 'ar.csv']):
+            self.assertEqual(utility.get_jsons(), ['ko.json', 'en.json.json'])
+
+    def test_parse(self):
+        with mock.patch('utility.open', return_value=io.StringIO('''{
+            "address": {
+                "city": "some_city",
+                "street": "some_street"
+            },
+            "person": {
+                "m": {
+                    "first_name": "some_first_name_m",
+                    "last_name": "some_last_name_m"},
+                "f": {
+                    "first_name": "some_first_name_f",
+                    "last_name": "some_last_name_f"
+                }
+            },
+            "job": "some_job"
+        }''')):
+            self.assertEqual(utility.parse("file"), {
+                "address": {
+                    "city": "some_city",
+                    "street": "some_street"
+                },
+                "person": {
+                    "m": {
+                        "first_name": "some_first_name_m",
+                        "last_name": "some_last_name_m"},
+                    "f": {
+                        "first_name": "some_first_name_f",
+                        "last_name": "some_last_name_f"
+                    }
+                },
+                "job": "some_job"
+            })
+        with mock.patch('utility.open', return_value=io.StringIO('')):
+            self.assertEqual(utility.parse("file"), dict())
 
 
 class ErrorTests(unittest.TestCase):
