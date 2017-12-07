@@ -141,6 +141,12 @@ class ErrorTests(unittest.TestCase):
         self.generator = Generator(("tests", self.test_data))
         with self.assertRaises(utility.InvalidArgumentError):
             self.generator.random_person("male", "test_data")
+        with self.assertRaises(utility.InvalidArgumentError):
+            self.generator.random_person("female", "test_data")
+        with self.assertRaises(utility.InvalidArgumentError):
+            self.generator.random_person("men", "test_data")
+        with self.assertRaises(utility.InvalidArgumentError):
+            self.generator.random_person("fem", "test_data")
 
 
 if __name__ == '__main__':
