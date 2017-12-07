@@ -137,6 +137,11 @@ class ErrorTests(unittest.TestCase):
         with self.assertRaises(NotFullLocalizationError):
             self.generator.random_address("test_data")
 
+    def test_invalid_argument(self):
+        self.generator = Generator(("tests", self.test_data))
+        with self.assertRaises(utility.InvalidArgumentError):
+            self.generator.random_person("male", "test_data")
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,5 @@
 from random import choice, randint, randrange, shuffle
-from utility import NotFullLocalizationError, NothingGeneratedError
+from utility import NotFullLocalizationError, NothingGeneratedError, InvalidArgumentError
 
 
 class Generator:
@@ -25,6 +25,8 @@ class Generator:
 
     def random_person(self, parameter, loc):
         """Depending on parameter randomize different persons"""
+        if parameter != "m" and parameter != "f":
+                raise InvalidArgumentError(f"argument '{parameter}' doesn't support. Please use 'm' or 'f' for it.")
         self._check_keys(loc, self._data_folder)
         try:
             return f"{choice(self._pds[loc]['person'][parameter]['first_name'])} " \

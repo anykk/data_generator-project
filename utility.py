@@ -66,3 +66,12 @@ class NothingGeneratedError(Exception):
     def __str__(self):
         return f"NothingGeneratedError: In {abspath(self.name) + '.json'} localization file for '{self.name}' " \
                f"localization {self.keys} is empty or 'broken'."
+
+
+class InvalidArgumentError(Exception):
+    """Throws when any argument is invalid"""
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return f"InvalidArgumentError: {self.message}."

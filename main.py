@@ -1,7 +1,8 @@
 import argparse
 import sys
 from generator import Generator
-from utility import get_pds, NothingGeneratedError, LocalizationNotFoundError, NotFullLocalizationError
+from utility import get_pds, NothingGeneratedError, LocalizationNotFoundError,\
+    NotFullLocalizationError, InvalidArgumentError
 
 
 def main():
@@ -26,6 +27,8 @@ def main():
                       generator.random_address(args.localization),
                       generator.random_job(args.localization),
                       generator.phone_number())
+        except InvalidArgumentError as e:
+            sys.exit(str(e))
         except LocalizationNotFoundError as e:
             sys.exit(str(e))
         except NotFullLocalizationError as e:
